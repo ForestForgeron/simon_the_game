@@ -3,22 +3,22 @@
     <div class="circle">
       <div
         class="green"
-        :style="isLighted[0] ? 'background: black;' : ''"
+        :style="isLighted[0] ? 'opacity: .6;' : ''"
         @click="getPlayerSequence(0)"
       ></div>
       <div
         class="yellow"
-        :style="isLighted[1] ? 'background: black;' : ''"
+        :style="isLighted[1] ? 'opacity: .6;' : ''"
         @click="getPlayerSequence(1)"
       ></div>
       <div
         class="red"
-        :style="isLighted[2] ? 'background: black;' : ''"
+        :style="isLighted[2] ? 'opacity: .6;' : ''"
         @click="getPlayerSequence(2)"
       ></div>
       <div
         class="blue"
-        :style="isLighted[3] ? 'background: black;' : ''"
+        :style="isLighted[3] ? 'opacity: .6;' : ''"
         @click="getPlayerSequence(3)"
       ></div>
     </div>
@@ -54,45 +54,10 @@ export default {
 
     lightenBtn(Id) {
       this.isLighted[Id] = !this.isLighted[Id];
-      //console.log("light");
+
       setTimeout(() => {
         this.isLighted[Id] = !this.isLighted[Id];
       }, 500);
-
-      /*for (let i = 0; i < this.gameSequence.length; i++) {
-        setTimeout(() => {
-          switch (this.gameSequence[i]) {
-            case 1:
-              this.isLighted[0] = !this.isLighted[0];
-              console.log("LOL1");
-              setTimeout(() => {
-                this.isLighted[0] = !this.isLighted[0];
-              }, 1000);
-              break;
-            case 2:
-              this.isLighted[1] = !this.isLighted[1];
-              console.log("LOL2");
-              setTimeout(() => {
-                this.isLighted[1] = !this.isLighted[1];
-              }, 1000);
-              break;
-            case 3:
-              this.isLighted[2] = !this.isLighted[2];
-              console.log("LOL3");
-              setTimeout(() => {
-                this.isLighted[2] = !this.isLighted[2];
-              }, 1000);
-              break;
-            case 4:
-              this.isLighted[3] = !this.isLighted[3];
-              console.log("LOL4");
-              setTimeout(() => {
-                this.isLighted[3] = !this.isLighted[3];
-              }, 1000);
-              break;
-          }
-        }, 1000);
-      } */
     },
 
     createGameSequence() {
@@ -116,7 +81,7 @@ export default {
     getPlayerSequence(Id) {
       this.playerSequence.push(Id);
       console.log("player num: " + Id);
-      //console.log(this.playerSequence);
+
       if (this.playerSequence.length == this.gameSequence.length) {
         this.compareSequences();
       }
@@ -149,7 +114,7 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style lang="scss" scoped>
 .app {
   display: flex;
