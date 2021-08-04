@@ -3,22 +3,22 @@
     <div class="circle">
       <div
         class="green"
-        :style="isLighted[0] ? 'opacity: .6;' : ''"
+        :style="isLighted[0] ? 'background: black;' : ''"
         @click="getPlayerSequence(0)"
       ></div>
       <div
         class="yellow"
-        :style="isLighted[1] ? 'opacity: .6;' : ''"
+        :style="isLighted[1] ? 'background: black;' : ''"
         @click="getPlayerSequence(1)"
       ></div>
       <div
         class="red"
-        :style="isLighted[2] ? 'opacity: .6;' : ''"
+        :style="isLighted[2] ? 'background: black;' : ''"
         @click="getPlayerSequence(2)"
       ></div>
       <div
         class="blue"
-        :style="isLighted[3] ? 'opacity: .6;' : ''"
+        :style="isLighted[3] ? 'background: black;' : ''"
         @click="getPlayerSequence(3)"
       ></div>
     </div>
@@ -37,7 +37,7 @@ export default {
       round: 1,
       score: 0,
       gameSequence: [],
-      isLighted: ["false", "false", "false", "false"],
+      isLighted: [false, false, false, false],
       playerSequence: [],
     };
   },
@@ -54,6 +54,7 @@ export default {
 
     lightenBtn(Id) {
       this.isLighted[Id] = !this.isLighted[Id];
+      //console.log("light");
       setTimeout(() => {
         this.isLighted[Id] = !this.isLighted[Id];
       }, 500);
@@ -102,9 +103,9 @@ export default {
         let randNum = Math.floor(Math.random() * 4);
 
         this.gameSequence.push(randNum);
-        this.lightenBtn(this.gameSequence[randNum]);
-
         console.log("game num: " + randNum);
+        this.lightenBtn(randNum);
+
         from++;
         if (from == to) {
           clearInterval(timerId);
