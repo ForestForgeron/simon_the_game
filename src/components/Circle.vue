@@ -1,37 +1,72 @@
 <template>
   <div class="app">
+    <h1 class="title">Simon Says</h1>
     <div class="circle">
+      <div class="centerPoint"></div>
       <div
-        class="green"
-        :style="isLighted[0] ? 'opacity: .6;' : ''"
+        class="square green"
+        :class="{ lightened: isLighted[0] }"
         @click="getPlayerSequence(0)"
+        @mousedown="lightenBtn(0)"
       ></div>
       <div
-        class="yellow"
-        :style="isLighted[1] ? 'opacity: .6;' : ''"
+        class="square red"
+        :class="{ lightened: isLighted[1] }"
         @click="getPlayerSequence(1)"
+        @mousedown="lightenBtn(1)"
       ></div>
       <div
-        class="red"
-        :style="isLighted[2] ? 'opacity: .6;' : ''"
+        class="square yellow"
+        :class="{ lightened: isLighted[2] }"
         @click="getPlayerSequence(2)"
+        @mousedown="lightenBtn(2)"
       ></div>
       <div
-        class="blue"
-        :style="isLighted[3] ? 'opacity: .6;' : ''"
+        class="square blue"
+        :class="{ lightened: isLighted[3] }"
         @click="getPlayerSequence(3)"
+        @mousedown="lightenBtn(3)"
       ></div>
     </div>
     <div class="menu">
-      <button class="start" @click="startGame">Start!</button>
-      <p class="score">Round: {{ round }}</p>
+      <button class="startBtn" @click="startGame">Start</button>
+
+      <p class="score">
+        Round:
+        <span class="score__num">
+          {{ round }}
+        </span>
+      </p>
     </div>
-    <span>Score: {{ score }} </span>
+    <span class="score">
+      Score:
+      <span class="score__num">
+        {{ score }}
+      </span>
+    </span>
   </div>
 </template>
 
 <script>
+import { useSound } from "@vueuse/sound";
+import simon1 from "../assets/simonSound1.mp3";
+import simon2 from "../assets/simonSound2.mp3";
+import simon3 from "../assets/simonSound3.mp3";
+import simon4 from "../assets/simonSound4.mp3";
+
 export default {
+  setup() {
+    const sound1 = useSound(simon1);
+    const sound2 = useSound(simon2);
+    const sound3 = useSound(simon3);
+    const sound4 = useSound(simon4);
+
+    const sounds = [sound1, sound2, sound3, sound4];
+
+    return {
+      sounds,
+    };
+  },
   data() {
     return {
       round: 1,
@@ -52,12 +87,18 @@ export default {
       this.createGameSequence();
     },
 
+    playSound(Id) {
+      this.sounds[Id].play();
+    },
+
     lightenBtn(Id) {
       this.isLighted[Id] = !this.isLighted[Id];
 
+      this.playSound(Id);
+
       setTimeout(() => {
         this.isLighted[Id] = !this.isLighted[Id];
-      }, 500);
+      }, 300);
     },
 
     createGameSequence() {
@@ -69,6 +110,7 @@ export default {
 
         this.gameSequence.push(randNum);
         console.log("game num: " + randNum);
+
         this.lightenBtn(randNum);
 
         from++;
@@ -80,6 +122,7 @@ export default {
 
     getPlayerSequence(Id) {
       this.playerSequence.push(Id);
+
       console.log("player num: " + Id);
 
       if (this.playerSequence.length == this.gameSequence.length) {
@@ -123,51 +166,107 @@ export default {
 
   justify-content: center;
   align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+
+  padding: 40px;
+
+  background: grey;
 }
+.title {
+  font-size: 40px;
+  text-align: center;
+  color: rgb(165, 22, 22);
+}
+
+.centerPoint {
+  position: absolute;
+  left: calc(50% - 25px);
+  top: calc(50% - 25px);
+
+  width: 50px;
+  height: 50px;
+
+  border: 1.5px rgb(139, 138, 138) solid;
+  border-radius: 50%;
+  background: silver;
+}
+
 .circle {
+  position: relative;
+
   display: flex;
   flex-wrap: wrap;
-  width: 400px;
-  height: 400px;
+
+  width: 300px;
+  height: 300px;
 
   border: 20px solid silver;
   border-radius: 50%;
 
   overflow: hidden;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
-.circle div {
+.square {
   width: 50%;
   height: 50%;
 
-  border: 3px black solid;
+  border: 1.5px rgb(139, 138, 138) solid;
 }
 
 .green {
-  background: rgba(6, 78, 6, 1);
+  background: #45aa25;
+
+  &.lightened {
+    background: lighten($color: #45aa25, $amount: 25%);
+  }
 }
 
 .red {
-  background: rgba(255, 0, 0, 1);
+  background: #aa2525;
+
+  &.lightened {
+    background: lighten($color: #aa2525, $amount: 25%);
+  }
 }
 
 .yellow {
-  background: rgba(255, 255, 0, 1);
+  background: #aaaa25;
+
+  &.lightened {
+    background: lighten($color: #aaaa25, $amount: 25%);
+  }
 }
 
 .blue {
-  background: rgba(0, 0, 255, 1);
+  background: #2525aa;
+
+  &.lightened {
+    background: lighten($color: #2525aa, $amount: 25%);
+  }
 }
 
-.start {
-  width: 100px;
-  height: 50px;
+.startBtn {
+  width: 80px;
+  height: 40px;
 
-  background: grey;
+  background: silver;
 
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  border-radius: 10px;
 
   cursor: pointer;
+
+  transition: all 0.3s ease-in-out;
 
   &:hover {
     background: greenyellow;
@@ -175,7 +274,13 @@ export default {
 }
 
 .score {
-  font-size: 20px;
+  font-size: 25px;
+
+  &__num {
+    color: rgb(5, 92, 5);
+    //color: rgb(15, 15, 221);
+    font-weight: 700;
+  }
 }
 
 .menu {
