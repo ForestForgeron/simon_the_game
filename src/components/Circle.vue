@@ -1,49 +1,55 @@
 <template>
   <div class="app">
-    <h1 class="title">Simon Says</h1>
-    <div class="circle">
-      <div class="centerPoint"></div>
-      <div
-        class="square green"
-        :class="{ lightened: isLighted[0] }"
-        @click="getPlayerSequence(0)"
-        @mousedown="lightenBtn(0)"
-      ></div>
-      <div
-        class="square red"
-        :class="{ lightened: isLighted[1] }"
-        @click="getPlayerSequence(1)"
-        @mousedown="lightenBtn(1)"
-      ></div>
-      <div
-        class="square yellow"
-        :class="{ lightened: isLighted[2] }"
-        @click="getPlayerSequence(2)"
-        @mousedown="lightenBtn(2)"
-      ></div>
-      <div
-        class="square blue"
-        :class="{ lightened: isLighted[3] }"
-        @click="getPlayerSequence(3)"
-        @mousedown="lightenBtn(3)"
-      ></div>
-    </div>
-    <div class="menu">
-      <button class="startBtn" @click="startGame">Start</button>
+    <div class="wrapper">
+      <h1 class="title">Simon Says</h1>
+      <p class="version">v1.3.5</p>
+      <div class="circle">
+        <div
+          class="square green"
+          :class="{ lightened: isLighted[0] }"
+          @click="getPlayerSequence(0)"
+          @mousedown="lightenBtn(0)"
+        ></div>
+        <div
+          class="square red"
+          :class="{ lightened: isLighted[1] }"
+          @click="getPlayerSequence(1)"
+          @mousedown="lightenBtn(1)"
+        ></div>
+        <div
+          class="square yellow"
+          :class="{ lightened: isLighted[2] }"
+          @click="getPlayerSequence(2)"
+          @mousedown="lightenBtn(2)"
+        ></div>
+        <div
+          class="square blue"
+          :class="{ lightened: isLighted[3] }"
+          @click="getPlayerSequence(3)"
+          @mousedown="lightenBtn(3)"
+        ></div>
+      </div>
+      <div class="menu">
+        <div class="buttons">
+          <button class="startBtn" @click="startGame">Start</button>
+        </div>
 
-      <p class="score">
-        Round:
-        <span class="score__num">
-          {{ round }}
-        </span>
-      </p>
+        <div class="info">
+          <p class="score score_animationRight">
+            Round:
+            <span class="score__num">
+              {{ round }}
+            </span>
+          </p>
+          <span class="score score_animationLeft">
+            Score:
+            <span class="score__num">
+              {{ score }}
+            </span>
+          </span>
+        </div>
+      </div>
     </div>
-    <span class="score">
-      Score:
-      <span class="score__num">
-        {{ score }}
-      </span>
-    </span>
   </div>
 </template>
 
@@ -162,35 +168,61 @@ export default {
 .app {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  //gap: 20px;
 
-  justify-content: center;
+  //justify-content: center;
   align-items: center;
 
   width: 100vw;
   height: 100vh;
 
-  padding: 40px;
+  //padding: 40px;
 
-  background: grey;
+  background: #f6d89e;
 }
+
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  //gap: 30px;
+
+  //justify-content: center;
+  align-items: center;
+
+  width: 350px;
+  height: 100vh;
+}
+
 .title {
-  font-size: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  font-size: 50px;
   text-align: center;
-  color: rgb(165, 22, 22);
+
+  color: #a5340a;
+
+  animation: moveDown 2s ease 0.2s 1 forwards;
 }
 
-.centerPoint {
-  position: absolute;
-  left: calc(50% - 25px);
-  top: calc(50% - 25px);
+@keyframes moveDown {
+  from {
+    transform: translateY(-10vh);
+  }
 
-  width: 50px;
-  height: 50px;
+  to {
+    transform: translateY(0);
+  }
+}
 
-  border: 1.5px rgb(139, 138, 138) solid;
-  border-radius: 50%;
-  background: silver;
+.version {
+  color: #a5340a;
+  margin-bottom: 20px;
+  font-size: 21px;
+
+  animation: appear 2s ease 0.2s 1 forwards;
 }
 
 .circle {
@@ -199,16 +231,55 @@ export default {
   display: flex;
   flex-wrap: wrap;
 
-  width: 300px;
-  height: 300px;
+  width: 340px;
+  height: 340px;
 
-  border: 20px solid silver;
   border-radius: 50%;
 
   overflow: hidden;
 
+  //transform: rotate(45deg);
+
+  animation: rotation 2s ease 0.2s 1 forwards;
+
   &:hover {
     cursor: pointer;
+  }
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(-180deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform: rotate(45deg);
+    opacity: 1;
+  }
+}
+
+@keyframes transitionLeft {
+  0% {
+    transform: translateX(50vw);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes transitionRight {
+  0% {
+    transform: translateX(-50vw);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
   }
 }
 
@@ -216,78 +287,120 @@ export default {
   width: 50%;
   height: 50%;
 
-  border: 1.5px rgb(139, 138, 138) solid;
+  border: 1.5px black solid;
 }
 
 .green {
-  background: #45aa25;
+  background: #225e1c;
 
   &.lightened {
-    background: lighten($color: #45aa25, $amount: 25%);
+    background: lighten($color: #225e1c, $amount: 25%);
   }
 }
 
 .red {
-  background: #aa2525;
+  background: #e82e08;
 
   &.lightened {
-    background: lighten($color: #aa2525, $amount: 25%);
+    background: lighten($color: #e82e08, $amount: 25%);
   }
 }
 
 .yellow {
-  background: #aaaa25;
+  background: #ffc02a;
 
   &.lightened {
-    background: lighten($color: #aaaa25, $amount: 25%);
+    background: lighten($color: #ffc02a, $amount: 25%);
   }
 }
 
 .blue {
-  background: #2525aa;
+  background: #1c465e;
 
   &.lightened {
-    background: lighten($color: #2525aa, $amount: 25%);
+    background: lighten($color: #1c465e, $amount: 25%);
   }
 }
 
 .startBtn {
-  width: 80px;
-  height: 40px;
+  width: 140px;
+  height: 45px;
+  padding-left: 10px;
 
-  background: silver;
+  background: #c00001;
 
-  font-size: 16px;
+  font-family: serif;
+  font-size: 20px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 8px;
 
   border-radius: 10px;
 
   cursor: pointer;
+  color: #fff;
 
   transition: all 0.3s ease-in-out;
 
+  animation: appear 3s ease 0.2s 1 forwards;
+
   &:hover {
-    background: greenyellow;
+    background: lighten($color: #c00001, $amount: 25%);
   }
 }
 
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.info {
+  display: flex;
+  gap: 100px;
+}
+
 .score {
+  font-family: sans-serif;
   font-size: 25px;
+  text-transform: uppercase;
 
   &__num {
-    color: rgb(5, 92, 5);
-    //color: rgb(15, 15, 221);
+    color: #3f4945;
     font-weight: 700;
+  }
+
+  &_animationLeft {
+    animation: transitionLeft 2s ease 0.2s 1 forwards;
+  }
+
+  &_animationRight {
+    animation: transitionRight 2s ease 0.2s 1 forwards;
   }
 }
 
 .menu {
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+  gap: 50px;
 
   justify-content: center;
   align-items: center;
+
+  margin-top: 50px;
+}
+
+@media screen and(max-width: 960px) {
+  .wrapper {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .circle {
+  }
 }
 </style>
