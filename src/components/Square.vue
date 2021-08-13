@@ -1,14 +1,23 @@
 <template>
   <div
     :class="squareColor"
-    @click="getPlayerSequence(id)"
-    @mousedown="lightenBtn(id)"
+    @click="getPlayerSequence"
+    @mousedown="lightenBtn"
   ></div>
 </template>
 
 <script>
 export default {
-  props: ["color", "id", "isLighted"],
+  props: {
+    id: {
+      type: Number,
+      required: true,
+    },
+    isLighted: {
+      type: Boolean,
+      required: true,
+    },
+  },
   emits: ["get-player-sequence", "lighten-btn"],
   data() {
     return {};
@@ -27,19 +36,19 @@ export default {
     squareColor() {
       let squareClass = { square: true, lightened: this.isLighted };
 
-      if (this.id === "0") {
+      if (this.id === 0) {
         squareClass["green"] = true;
       }
 
-      if (this.id === "1") {
+      if (this.id === 1) {
         squareClass["red"] = true;
       }
 
-      if (this.id === "2") {
+      if (this.id === 2) {
         squareClass["yellow"] = true;
       }
 
-      if (this.id === "3") {
+      if (this.id === 3) {
         squareClass["blue"] = true;
       }
 
