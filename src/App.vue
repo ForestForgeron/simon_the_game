@@ -3,11 +3,7 @@
     <div class="wrapper">
       <h1 class="title">Simon Says</h1>
       <p class="version">v1.5.3</p>
-      <Circle
-        :isLighted="isLighted"
-        @get-player-sequence="getPlayerSequence"
-        @lighten-btn="lightenBtn"
-      />
+      <Circle :isLighted="isLighted" @click-square="clickSquare" />
       <div class="menu-wrapper">
         <Menu
           :isGamePlaying="isGamePlaying"
@@ -48,6 +44,7 @@ export default {
   data() {
     return {
       isGamePlaying: false,
+      isClickable: false,
       round: 1,
       score: 0,
       isMusicPlaying: false,
@@ -70,6 +67,12 @@ export default {
       this.createGameSequence();
     },
 
+    clickSquare(id) {
+      if (this.isClickable === true) {
+        this.getPlayerSequence(id);
+      }
+    },
+
     playSound(Id) {
       this.sounds[Id].stop();
 
@@ -87,6 +90,7 @@ export default {
     },
 
     createGameSequence() {
+      this.isClickable = false;
       let from = 0;
       const to = this.round;
 
@@ -100,12 +104,14 @@ export default {
         from++;
         if (from == to) {
           clearInterval(timerId);
+          this.isClickable = true;
         }
       }, 1000);
     },
 
     getPlayerSequence(Id) {
       this.playerSequence.push(Id);
+      this.lightenBtn(Id);
 
       if (this.playerSequence.length == this.gameSequence.length) {
         this.compareSequences();

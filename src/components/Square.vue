@@ -1,9 +1,5 @@
 <template>
-  <div
-    :class="squareColor"
-    @click="getPlayerSequence"
-    @mousedown="lightenBtn"
-  ></div>
+  <div :class="squareColor" @click="clickSquare"></div>
 </template>
 
 <script>
@@ -18,17 +14,13 @@ export default {
       required: true,
     },
   },
-  emits: ["get-player-sequence", "lighten-btn"],
+  emits: ["click-square"],
   data() {
     return {};
   },
   methods: {
-    getPlayerSequence() {
-      this.$emit("get-player-sequence", this.id);
-    },
-
-    lightenBtn() {
-      this.$emit("lighten-btn", this.id);
+    clickSquare() {
+      this.$emit("click-square", this.id);
     },
   },
 

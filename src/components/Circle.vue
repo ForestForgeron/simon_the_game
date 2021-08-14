@@ -1,32 +1,12 @@
 <template>
   <div class="circle">
-    <Square
-      :id="0"
-      :isLighted="isLighted[0]"
-      @get-player-sequence="getPlayerSequence"
-      @lighten-btn="lightenBtn"
-    />
+    <Square :id="0" :isLighted="isLighted[0]" @click-square="clickSquare" />
 
-    <Square
-      :id="1"
-      :isLighted="isLighted[1]"
-      @get-player-sequence="getPlayerSequence"
-      @lighten-btn="lightenBtn"
-    />
+    <Square :id="1" :isLighted="isLighted[1]" @click-square="clickSquare" />
 
-    <Square
-      :id="2"
-      :isLighted="isLighted[2]"
-      @get-player-sequence="getPlayerSequence"
-      @lighten-btn="lightenBtn"
-    />
+    <Square :id="2" :isLighted="isLighted[2]" @click-square="clickSquare" />
 
-    <Square
-      :id="3"
-      :isLighted="isLighted[3]"
-      @get-player-sequence="getPlayerSequence"
-      @lighten-btn="lightenBtn"
-    />
+    <Square :id="3" :isLighted="isLighted[3]" @click-square="clickSquare" />
   </div>
 </template>
 
@@ -44,12 +24,8 @@ export default {
   },
 
   methods: {
-    getPlayerSequence(id) {
-      this.$emit("get-player-sequence", id);
-    },
-
-    lightenBtn(id) {
-      this.$emit("lighten-btn", id);
+    clickSquare(id) {
+      this.$emit("click-square", id);
     },
   },
 };

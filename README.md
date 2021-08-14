@@ -1,24 +1,16 @@
 # simon_the_game
 
-## Project setup
-```
-npm install
-```
+My own realization of this game with Vue 3. 
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+- to start press "Start" button
+-to reset press "Reset" button
 
-### Compiles and minifies for production
-```
-npm run build
-```
+In each round the game shows you a sequence of lights, which you have to repeat.
 
-### Lints and fixes files
-```
-npm run lint
-```
+Don't be affraid to press the button by accident when the game sequence is playing. The buttons are blocked when it's happening to prevent confusion:)
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+There are 10 rounds, and scores off course. 
+
+Music is from good old game Mario, and I hope it will refresh warm memories from the childhood:)
+
+Have fun and Good Luck!:)
