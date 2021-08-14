@@ -3,7 +3,7 @@
 My own realization of this game with Vue 3. 
 
 - to start press "Start" button
--to reset press "Reset" button
+- to reset press "Reset" button
 
 In each round the game shows you a sequence of lights, which you have to repeat.
 
